@@ -8,6 +8,11 @@
 	"author": "Steve-o <fnjordy@gmail.com>",
 	"license": "MIT",
 	"private": false,
+	"allowScripts": {
+		"@dsbunny/capdb-schema": true,
+		"@dsbunny/error-schema": true,
+		"@dsbunny/webhook-schema": true
+	},
 	"scripts": {
 		"build": "tsc",
 		"clean": "rm -rf dist node_modules package-lock.json",
@@ -16,7 +21,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"devDependencies": {
-		"@dsbunny/capdb-schema": "github:dsbunny/capdb-schema#4a21bcc",
+		"@dsbunny/capdb-schema": "github:dsbunny/capdb-schema#76a8b31",
 		"@dsbunny/error-schema": "github:dsbunny/error-schema#be4645d",
 		"@dsbunny/webhook-schema": "github:dsbunny/webhook-schema#4178b06",
 		"typescript": "^5.9.3",

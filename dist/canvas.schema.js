@@ -80,7 +80,7 @@ export const DbDtoToCanvas = z.object({
     is_deleted: z.number().default(0),
 })
     .transform((dto, ctx) => {
-    const tags_result = jsonSafeParser(z.array(z.string().max(64))).safeParse(dto.tags);
+    const tags_result = jsonSafeParser(Canvas.shape.tags).safeParse(dto.tags);
     if (!tags_result.success) {
         ctx.addIssue({
             code: "custom",
@@ -89,7 +89,7 @@ export const DbDtoToCanvas = z.object({
         });
         return z.NEVER;
     }
-    const viewports_result = jsonSafeParser(z.array(Viewport)).safeParse(dto.viewports);
+    const viewports_result = jsonSafeParser(Canvas.shape.viewports).safeParse(dto.viewports);
     if (!viewports_result.success) {
         ctx.addIssue({
             code: "custom",
@@ -98,7 +98,7 @@ export const DbDtoToCanvas = z.object({
         });
         return z.NEVER;
     }
-    const capabilities_result = jsonSafeParser(z.array(CapabilityTypes)).safeParse(dto.capabilities);
+    const capabilities_result = jsonSafeParser(Canvas.shape.capabilities).safeParse(dto.capabilities);
     if (!capabilities_result.success) {
         ctx.addIssue({
             code: "custom",
