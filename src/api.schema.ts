@@ -1,120 +1,120 @@
 // vim: tabstop=8 softtabstop=0 noexpandtab shiftwidth=8 nosmarttab
 
 import * as z from "zod";
-import { ErrorResponse } from "@dsbunny/error-schema";
+import { ErrorResponseSchema } from "@dsbunny/error-schema";
 import {
-	Canvas,
-	CanvasBase,
-	CanvasRegistration,
+	CanvasSchema,
+	CanvasBaseSchema,
+	CanvasRegistrationSchema,
 } from './canvas.schema.js';
-import { JsonPatchOperation } from './patch-operation.schema.js';
+import { JsonPatchOperationSchema } from './patch-operation.schema.js';
 
 // #region Canvases
-export const ListCanvasesRequest = z.object({})
+export const ListCanvasesRequestSchema = z.object({})
 	.describe('List canvases request schema');
-export type ListCanvasesRequest = z.infer<typeof ListCanvasesRequest>;
-export const ListCanvasesResponse = z.object({
-	canvases: z.array(Canvas),
+export type ListCanvasesRequest = z.infer<typeof ListCanvasesRequestSchema>;
+export const ListCanvasesResponseSchema = z.object({
+	canvases: z.array(CanvasSchema),
 	next_token: z.string().nullable(),
 })
 	.describe('List canvases response schema');
-export type ListCanvasesResponse = z.infer<typeof ListCanvasesResponse>;
+export type ListCanvasesResponse = z.infer<typeof ListCanvasesResponseSchema>;
 
-export const GetCanvasSuggestionsRequest = z.object({})
+export const GetCanvasSuggestionsRequestSchema = z.object({})
 	.describe('Get canvas suggestions request schema');
-export type GetCanvasSuggestionsRequest = z.infer<typeof GetCanvasSuggestionsRequest>;
-export const GetCanvasSuggestionsResponse = z.object({
+export type GetCanvasSuggestionsRequest = z.infer<typeof GetCanvasSuggestionsRequestSchema>;
+export const GetCanvasSuggestionsResponseSchema = z.object({
 	c: z.tuple([z.string(), z.string().nullable()])
 		.describe('Canvas name auto-complete for given prefix'),
 	s: z.array(z.tuple([z.string(), z.string().nullable()]))
 		.describe('Canvas name suggestions for given input'),
 })
 	.describe('Get canvas suggestions response schema');
-export type GetCanvasSuggestionsResponse = z.infer<typeof GetCanvasSuggestionsResponse>;
+export type GetCanvasSuggestionsResponse = z.infer<typeof GetCanvasSuggestionsResponseSchema>;
 
-export const GetCanvasAvailabilityRequest = z.object({})
+export const GetCanvasAvailabilityRequestSchema = z.object({})
 	.describe('Get canvas availability request schema');
-export type GetCanvasAvailabilityRequest = z.infer<typeof GetCanvasAvailabilityRequest>;
-export const GetCanvasAvailabilityResponse = z.object({
+export type GetCanvasAvailabilityRequest = z.infer<typeof GetCanvasAvailabilityRequestSchema>;
+export const GetCanvasAvailabilityResponseSchema = z.object({
 	is_available: z.boolean()
 		.describe('Indicates if the canvas name is available'),
 })
 	.describe('Get canvas availability response schema');
-export type GetCanvasAvailabilityResponse = z.infer<typeof GetCanvasAvailabilityResponse>;
+export type GetCanvasAvailabilityResponse = z.infer<typeof GetCanvasAvailabilityResponseSchema>;
 
-export const ListDeletedCanvasesRequest = z.object({})
+export const ListDeletedCanvasesRequestSchema = z.object({})
 	.describe('List deleted canvases request schema');
-export type ListDeletedCanvasesRequest = z.infer<typeof ListDeletedCanvasesRequest>;
-export const ListDeletedCanvasesResponse = z.object({
-	canvases: z.array(Canvas),
+export type ListDeletedCanvasesRequest = z.infer<typeof ListDeletedCanvasesRequestSchema>;
+export const ListDeletedCanvasesResponseSchema = z.object({
+	canvases: z.array(CanvasSchema),
 	next_token: z.string().nullable(),
 })
 	.describe('List deleted canvases response schema');
-export type ListDeletedCanvasesResponse = z.infer<typeof ListDeletedCanvasesResponse>;
+export type ListDeletedCanvasesResponse = z.infer<typeof ListDeletedCanvasesResponseSchema>;
 
-export const CreateCanvasRequest = CanvasBase
+export const CreateCanvasRequestSchema = CanvasBaseSchema
 	.describe('Create canvas request schema');
-export type CreateCanvasRequest = z.infer<typeof CreateCanvasRequest>;
-export const CreateCanvasResponse = CanvasRegistration
+export type CreateCanvasRequest = z.infer<typeof CreateCanvasRequestSchema>;
+export const CreateCanvasResponseSchema = CanvasRegistrationSchema
 	.describe('Create canvas response schema');
-export type CreateCanvasResponse = z.infer<typeof CreateCanvasResponse>;
+export type CreateCanvasResponse = z.infer<typeof CreateCanvasResponseSchema>;
 
-export const GetCanvasRequest = z.object({})
+export const GetCanvasRequestSchema = z.object({})
 	.describe('Get canvas request schema');
-export type GetCanvasRequest = z.infer<typeof GetCanvasRequest>;
-export const GetCanvasResponse = Canvas
+export type GetCanvasRequest = z.infer<typeof GetCanvasRequestSchema>;
+export const GetCanvasResponseSchema = CanvasSchema
 	.describe('Get canvas response schema');
-export type GetCanvasResponse = z.infer<typeof GetCanvasResponse>;
+export type GetCanvasResponse = z.infer<typeof GetCanvasResponseSchema>;
 
-export const DeleteCanvasRequest = z.object({})
+export const DeleteCanvasRequestSchema = z.object({})
 	.describe('Delete canvas request schema');
-export type DeleteCanvasRequest = z.infer<typeof DeleteCanvasRequest>;
-export const DeleteCanvasResponse = z.object({})
+export type DeleteCanvasRequest = z.infer<typeof DeleteCanvasRequestSchema>;
+export const DeleteCanvasResponseSchema = z.object({})
 	.describe('Delete canvas response schema');
-export type DeleteCanvasResponse = z.infer<typeof DeleteCanvasResponse>;
+export type DeleteCanvasResponse = z.infer<typeof DeleteCanvasResponseSchema>;
 
-export const RecoverCanvasRequest = z.object({})
+export const RecoverCanvasRequestSchema = z.object({})
 	.describe('Recover canvas request schema');
-export type RecoverCanvasRequest = z.infer<typeof RecoverCanvasRequest>;
-export const RecoverCanvasResponse = Canvas
+export type RecoverCanvasRequest = z.infer<typeof RecoverCanvasRequestSchema>;
+export const RecoverCanvasResponseSchema = CanvasSchema
 	.describe('Recover canvas response schema');
-export type RecoverCanvasResponse = z.infer<typeof RecoverCanvasResponse>;
+export type RecoverCanvasResponse = z.infer<typeof RecoverCanvasResponseSchema>;
 
-export const PatchCanvasRequest = z.array(JsonPatchOperation).max(50)
+export const PatchCanvasRequestSchema = z.array(JsonPatchOperationSchema).max(50)
 	.describe('Patch canvas request schema');
-export type PatchCanvasRequest = z.infer<typeof PatchCanvasRequest>;
-export const PatchCanvasResponse = Canvas
+export type PatchCanvasRequest = z.infer<typeof PatchCanvasRequestSchema>;
+export const PatchCanvasResponseSchema = CanvasSchema
 	.describe('Patch canvas response schema');
-export type PatchCanvasResponse = z.infer<typeof PatchCanvasResponse>;
+export type PatchCanvasResponse = z.infer<typeof PatchCanvasResponseSchema>;
 // #endregion
 
 // #region API
-export const CanvasDbRequest = z.union([
-	ListCanvasesRequest,
-	GetCanvasSuggestionsRequest,
-	GetCanvasAvailabilityRequest,
-	ListDeletedCanvasesRequest,
-	CreateCanvasRequest,
-	GetCanvasRequest,
-	DeleteCanvasRequest,
-	RecoverCanvasRequest,
-	PatchCanvasRequest,
+export const CanvasDbRequestSchema = z.union([
+	ListCanvasesRequestSchema,
+	GetCanvasSuggestionsRequestSchema,
+	GetCanvasAvailabilityRequestSchema,
+	ListDeletedCanvasesRequestSchema,
+	CreateCanvasRequestSchema,
+	GetCanvasRequestSchema,
+	DeleteCanvasRequestSchema,
+	RecoverCanvasRequestSchema,
+	PatchCanvasRequestSchema,
 ])
 	.describe('CanvasDB request schema');
-export type CanvasDbRequest = z.infer<typeof CanvasDbRequest>;
+export type CanvasDbRequest = z.infer<typeof CanvasDbRequestSchema>;
 
-export const CanvasDbResponse = z.union([
-	ListCanvasesResponse,
-	GetCanvasSuggestionsResponse,
-	GetCanvasAvailabilityResponse,
-	ListDeletedCanvasesResponse,
-	CreateCanvasResponse,
-	GetCanvasResponse,
-	DeleteCanvasResponse,
-	RecoverCanvasResponse,
-	PatchCanvasResponse,
-	ErrorResponse,
+export const CanvasDbResponseSchema = z.union([
+	ListCanvasesResponseSchema,
+	GetCanvasSuggestionsResponseSchema,
+	GetCanvasAvailabilityResponseSchema,
+	ListDeletedCanvasesResponseSchema,
+	CreateCanvasResponseSchema,
+	GetCanvasResponseSchema,
+	DeleteCanvasResponseSchema,
+	RecoverCanvasResponseSchema,
+	PatchCanvasResponseSchema,
+	ErrorResponseSchema,
 ])
 	.describe('CanvasDB response schema');
-export type CanvasDbResponse = z.infer<typeof CanvasDbResponse>;
+export type CanvasDbResponse = z.infer<typeof CanvasDbResponseSchema>;
 // #endregion

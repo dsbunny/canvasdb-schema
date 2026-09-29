@@ -1,84 +1,84 @@
 // vim: tabstop=8 softtabstop=0 noexpandtab shiftwidth=8 nosmarttab
 import * as z from "zod";
-import { ErrorResponse } from "@dsbunny/error-schema";
-import { Canvas, CanvasBase, CanvasRegistration, } from './canvas.schema.js';
-import { JsonPatchOperation } from './patch-operation.schema.js';
+import { ErrorResponseSchema } from "@dsbunny/error-schema";
+import { CanvasSchema, CanvasBaseSchema, CanvasRegistrationSchema, } from './canvas.schema.js';
+import { JsonPatchOperationSchema } from './patch-operation.schema.js';
 // #region Canvases
-export const ListCanvasesRequest = z.object({})
+export const ListCanvasesRequestSchema = z.object({})
     .describe('List canvases request schema');
-export const ListCanvasesResponse = z.object({
-    canvases: z.array(Canvas),
+export const ListCanvasesResponseSchema = z.object({
+    canvases: z.array(CanvasSchema),
     next_token: z.string().nullable(),
 })
     .describe('List canvases response schema');
-export const GetCanvasSuggestionsRequest = z.object({})
+export const GetCanvasSuggestionsRequestSchema = z.object({})
     .describe('Get canvas suggestions request schema');
-export const GetCanvasSuggestionsResponse = z.object({
+export const GetCanvasSuggestionsResponseSchema = z.object({
     c: z.tuple([z.string(), z.string().nullable()])
         .describe('Canvas name auto-complete for given prefix'),
     s: z.array(z.tuple([z.string(), z.string().nullable()]))
         .describe('Canvas name suggestions for given input'),
 })
     .describe('Get canvas suggestions response schema');
-export const GetCanvasAvailabilityRequest = z.object({})
+export const GetCanvasAvailabilityRequestSchema = z.object({})
     .describe('Get canvas availability request schema');
-export const GetCanvasAvailabilityResponse = z.object({
+export const GetCanvasAvailabilityResponseSchema = z.object({
     is_available: z.boolean()
         .describe('Indicates if the canvas name is available'),
 })
     .describe('Get canvas availability response schema');
-export const ListDeletedCanvasesRequest = z.object({})
+export const ListDeletedCanvasesRequestSchema = z.object({})
     .describe('List deleted canvases request schema');
-export const ListDeletedCanvasesResponse = z.object({
-    canvases: z.array(Canvas),
+export const ListDeletedCanvasesResponseSchema = z.object({
+    canvases: z.array(CanvasSchema),
     next_token: z.string().nullable(),
 })
     .describe('List deleted canvases response schema');
-export const CreateCanvasRequest = CanvasBase
+export const CreateCanvasRequestSchema = CanvasBaseSchema
     .describe('Create canvas request schema');
-export const CreateCanvasResponse = CanvasRegistration
+export const CreateCanvasResponseSchema = CanvasRegistrationSchema
     .describe('Create canvas response schema');
-export const GetCanvasRequest = z.object({})
+export const GetCanvasRequestSchema = z.object({})
     .describe('Get canvas request schema');
-export const GetCanvasResponse = Canvas
+export const GetCanvasResponseSchema = CanvasSchema
     .describe('Get canvas response schema');
-export const DeleteCanvasRequest = z.object({})
+export const DeleteCanvasRequestSchema = z.object({})
     .describe('Delete canvas request schema');
-export const DeleteCanvasResponse = z.object({})
+export const DeleteCanvasResponseSchema = z.object({})
     .describe('Delete canvas response schema');
-export const RecoverCanvasRequest = z.object({})
+export const RecoverCanvasRequestSchema = z.object({})
     .describe('Recover canvas request schema');
-export const RecoverCanvasResponse = Canvas
+export const RecoverCanvasResponseSchema = CanvasSchema
     .describe('Recover canvas response schema');
-export const PatchCanvasRequest = z.array(JsonPatchOperation).max(50)
+export const PatchCanvasRequestSchema = z.array(JsonPatchOperationSchema).max(50)
     .describe('Patch canvas request schema');
-export const PatchCanvasResponse = Canvas
+export const PatchCanvasResponseSchema = CanvasSchema
     .describe('Patch canvas response schema');
 // #endregion
 // #region API
-export const CanvasDbRequest = z.union([
-    ListCanvasesRequest,
-    GetCanvasSuggestionsRequest,
-    GetCanvasAvailabilityRequest,
-    ListDeletedCanvasesRequest,
-    CreateCanvasRequest,
-    GetCanvasRequest,
-    DeleteCanvasRequest,
-    RecoverCanvasRequest,
-    PatchCanvasRequest,
+export const CanvasDbRequestSchema = z.union([
+    ListCanvasesRequestSchema,
+    GetCanvasSuggestionsRequestSchema,
+    GetCanvasAvailabilityRequestSchema,
+    ListDeletedCanvasesRequestSchema,
+    CreateCanvasRequestSchema,
+    GetCanvasRequestSchema,
+    DeleteCanvasRequestSchema,
+    RecoverCanvasRequestSchema,
+    PatchCanvasRequestSchema,
 ])
     .describe('CanvasDB request schema');
-export const CanvasDbResponse = z.union([
-    ListCanvasesResponse,
-    GetCanvasSuggestionsResponse,
-    GetCanvasAvailabilityResponse,
-    ListDeletedCanvasesResponse,
-    CreateCanvasResponse,
-    GetCanvasResponse,
-    DeleteCanvasResponse,
-    RecoverCanvasResponse,
-    PatchCanvasResponse,
-    ErrorResponse,
+export const CanvasDbResponseSchema = z.union([
+    ListCanvasesResponseSchema,
+    GetCanvasSuggestionsResponseSchema,
+    GetCanvasAvailabilityResponseSchema,
+    ListDeletedCanvasesResponseSchema,
+    CreateCanvasResponseSchema,
+    GetCanvasResponseSchema,
+    DeleteCanvasResponseSchema,
+    RecoverCanvasResponseSchema,
+    PatchCanvasResponseSchema,
+    ErrorResponseSchema,
 ])
     .describe('CanvasDB response schema');
 // #endregion

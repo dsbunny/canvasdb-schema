@@ -1,13 +1,13 @@
 import * as z from "zod";
-export declare const Viewport: z.ZodObject<{
+export declare const ViewportSchema: z.ZodObject<{
     reference_id: z.ZodString;
     x: z.ZodNumber;
     y: z.ZodNumber;
     width: z.ZodNumber;
     height: z.ZodNumber;
 }, z.core.$strip>;
-export type Viewport = z.infer<typeof Viewport>;
-export declare const CanvasBase: z.ZodObject<{
+export type Viewport = z.infer<typeof ViewportSchema>;
+export declare const CanvasBaseSchema: z.ZodObject<{
     name: z.ZodString;
     tags: z.ZodArray<z.ZodString>;
     width: z.ZodNumber;
@@ -49,22 +49,22 @@ export declare const CanvasBase: z.ZodObject<{
         is_power_efficient: z.ZodLiteral<true>;
     }, z.core.$strip>], "mime_type">>;
 }, z.core.$strip>;
-export type CanvasBase = z.infer<typeof CanvasBase>;
-export declare const CanvasRegistration: z.ZodObject<{
+export type CanvasBase = z.infer<typeof CanvasBaseSchema>;
+export declare const CanvasRegistrationSchema: z.ZodObject<{
     tenant_id: z.ZodString;
     canvas_id: z.ZodUUID;
     create_timestamp: z.ZodISODateTime;
 }, z.core.$strip>;
-export type CanvasRegistration = z.infer<typeof CanvasRegistration>;
-export declare const CanvasMetadata: z.ZodObject<{
+export type CanvasRegistration = z.infer<typeof CanvasRegistrationSchema>;
+export declare const CanvasMetadataSchema: z.ZodObject<{
     tenant_id: z.ZodString;
     canvas_id: z.ZodUUID;
     create_timestamp: z.ZodISODateTime;
     modify_timestamp: z.ZodISODateTime;
     is_deleted: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>;
-export type CanvasMetadata = z.infer<typeof CanvasMetadata>;
-export declare const Canvas: z.ZodObject<{
+export type CanvasMetadata = z.infer<typeof CanvasMetadataSchema>;
+export declare const CanvasSchema: z.ZodObject<{
     name: z.ZodString;
     tags: z.ZodArray<z.ZodString>;
     width: z.ZodNumber;
@@ -111,8 +111,8 @@ export declare const Canvas: z.ZodObject<{
     modify_timestamp: z.ZodISODateTime;
     is_deleted: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>;
-export type Canvas = z.infer<typeof Canvas>;
-export declare const DbDtoFromCanvasBase: z.ZodPipe<z.ZodObject<{
+export type Canvas = z.infer<typeof CanvasSchema>;
+export declare const DbDtoFromCanvasBaseSchema: z.ZodPipe<z.ZodObject<{
     name: z.ZodString;
     tags: z.ZodArray<z.ZodString>;
     width: z.ZodNumber;
@@ -203,7 +203,7 @@ export declare const DbDtoFromCanvasBase: z.ZodPipe<z.ZodObject<{
         is_power_efficient: true;
     })[];
 }>>;
-export declare const DbDtoFromCanvas: z.ZodPipe<z.ZodObject<{
+export declare const DbDtoFromCanvasSchema: z.ZodPipe<z.ZodObject<{
     name: z.ZodString;
     tags: z.ZodArray<z.ZodString>;
     width: z.ZodNumber;
@@ -309,7 +309,7 @@ export declare const DbDtoFromCanvas: z.ZodPipe<z.ZodObject<{
     modify_timestamp: string;
     is_deleted: boolean;
 }>>;
-export declare const DbDtoToCanvas: z.ZodPipe<z.ZodObject<{
+export declare const DbDtoToCanvasSchema: z.ZodPipe<z.ZodObject<{
     canvas_id: z.ZodUUID;
     tenant_id: z.ZodUUID;
     name: z.ZodString;

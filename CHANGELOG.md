@@ -1,4 +1,7 @@
 # Changelog
+## v7.0.16
+- Split schema definitions to separate Schema suffix to resolve vsCode and tooling confusion.
+
 ## v6.0.15
 - Rename exports `CanvasDaemon` to `CanvasDb`.
 - Update import to `@dsbunny/capdb-schema`.

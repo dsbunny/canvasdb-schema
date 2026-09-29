@@ -1,9 +1,9 @@
 // vim: tabstop=8 softtabstop=0 noexpandtab shiftwidth=8 nosmarttab
 import * as z from "zod";
-import { CapabilityTypes } from '@dsbunny/capdb-schema';
-import { sqliteDateSchema } from './sqlite-date.schema.js';
+import { CapabilityTypesSchema } from '@dsbunny/capdb-schema';
+import { SqliteDateSchema } from './sqlite-date.schema.js';
 import { jsonSafeParser } from './json-safe-parser.js';
-export const Viewport = z.object({
+export const ViewportSchema = z.object({
     reference_id: z.string()
         .describe('The reference ID of the viewport'),
     x: z.number().int()
@@ -16,7 +16,7 @@ export const Viewport = z.object({
         .describe('The height of the viewport'),
 })
     .describe('The viewport');
-export const CanvasBase = z.object({
+export const CanvasBaseSchema = z.object({
     name: z.string()
         .describe('A descriptive name for the canvas'),
     tags: z.array(z.string()).min(1).max(100)
@@ -27,12 +27,12 @@ export const CanvasBase = z.object({
         .describe('The height of the canvas'),
     frame_rate: z.number().int().min(1).max(1000)
         .describe('The maximum frames per second of the canvas'),
-    viewports: z.array(Viewport).min(1).max(1000)
+    viewports: z.array(ViewportSchema).min(1).max(1000)
         .describe('The viewports of the canvas'),
-    capabilities: z.array(CapabilityTypes).max(1000)
+    capabilities: z.array(CapabilityTypesSchema).max(1000)
         .describe('The capabilities of the canvas'),
 });
-export const CanvasRegistration = z.object({
+export const CanvasRegistrationSchema = z.object({
     tenant_id: z.string()
         .describe('The tenant ID of the canvas'),
     canvas_id: z.uuid()
@@ -41,15 +41,15 @@ export const CanvasRegistration = z.object({
         .describe('The ISO datetime of the canvas creation'),
 })
     .describe('The registration of the canvas');
-export const CanvasMetadata = CanvasRegistration.extend({
+export const CanvasMetadataSchema = CanvasRegistrationSchema.extend({
     modify_timestamp: z.iso.datetime()
         .describe('The ISO datetime of when the canvas was last modified'),
     is_deleted: z.boolean().default(false)
         .describe('Whether the canvas is deleted'),
 })
     .describe('The metadata of the canvas');
-export const Canvas = CanvasBase.extend(CanvasMetadata.shape);
-export const DbDtoFromCanvasBase = CanvasBase.transform((canvas) => {
+export const CanvasSchema = CanvasBaseSchema.extend(CanvasMetadataSchema.shape);
+export const DbDtoFromCanvasBaseSchema = CanvasBaseSchema.transform((canvas) => {
     return {
         ...canvas,
         tags: JSON.stringify(canvas.tags),
@@ -57,7 +57,7 @@ export const DbDtoFromCanvasBase = CanvasBase.transform((canvas) => {
         capabilities: JSON.stringify(canvas.capabilities),
     };
 });
-export const DbDtoFromCanvas = Canvas.transform((canvas) => {
+export const DbDtoFromCanvasSchema = CanvasSchema.transform((canvas) => {
     return {
         ...canvas,
         tags: JSON.stringify(canvas.tags),
@@ -65,7 +65,7 @@ export const DbDtoFromCanvas = Canvas.transform((canvas) => {
         capabilities: JSON.stringify(canvas.capabilities),
     };
 });
-export const DbDtoToCanvas = z.object({
+export const DbDtoToCanvasSchema = z.object({
     canvas_id: z.uuid(),
     tenant_id: z.uuid(),
     name: z.string(),
@@ -75,12 +75,12 @@ export const DbDtoToCanvas = z.object({
     frame_rate: z.number().int().min(1).max(1000),
     viewports: z.string(),
     capabilities: z.string(),
-    create_timestamp: sqliteDateSchema,
-    modify_timestamp: sqliteDateSchema,
+    create_timestamp: SqliteDateSchema,
+    modify_timestamp: SqliteDateSchema,
     is_deleted: z.number().default(0),
 })
     .transform((dto, ctx) => {
-    const tags_result = jsonSafeParser(Canvas.shape.tags).safeParse(dto.tags);
+    const tags_result = jsonSafeParser(CanvasSchema.shape.tags).safeParse(dto.tags);
     if (!tags_result.success) {
         ctx.addIssue({
             code: "custom",
@@ -89,7 +89,7 @@ export const DbDtoToCanvas = z.object({
         });
         return z.NEVER;
     }
-    const viewports_result = jsonSafeParser(Canvas.shape.viewports).safeParse(dto.viewports);
+    const viewports_result = jsonSafeParser(CanvasSchema.shape.viewports).safeParse(dto.viewports);
     if (!viewports_result.success) {
         ctx.addIssue({
             code: "custom",
@@ -98,7 +98,7 @@ export const DbDtoToCanvas = z.object({
         });
         return z.NEVER;
     }
-    const capabilities_result = jsonSafeParser(Canvas.shape.capabilities).safeParse(dto.capabilities);
+    const capabilities_result = jsonSafeParser(CanvasSchema.shape.capabilities).safeParse(dto.capabilities);
     if (!capabilities_result.success) {
         ctx.addIssue({
             code: "custom",

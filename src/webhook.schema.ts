@@ -2,28 +2,28 @@
 
 import * as z from "zod";
 import {
-        WebhookProgress,
-        WebhookRequest,
-        WebhookResponse,
+        WebhookProgressSchema,
+        WebhookRequestSchema,
+        WebhookResponseSchema,
 } from "@dsbunny/webhook-schema";
 
-export const CanvasDbWebhookClass = z.enum(['canvas'])
+export const CanvasDbWebhookClassSchema = z.enum(['canvas'])
         .describe('The class of the webhook event related to canvas operations');
-export type CanvasDbWebhookClass = z.infer<typeof CanvasDbWebhookClass>;
+export type CanvasDbWebhookClass = z.infer<typeof CanvasDbWebhookClassSchema>;
 
-export const CanvasDbWebhookType = z.enum(['new', 'change', 'delete'])
+export const CanvasDbWebhookTypeSchema = z.enum(['new', 'change', 'delete'])
         .describe('The type of the webhook event related to canvas operations');
-export type CanvasDbWebhookType = z.infer<typeof CanvasDbWebhookType>;
+export type CanvasDbWebhookType = z.infer<typeof CanvasDbWebhookTypeSchema>;
 
-export const CanvasDbWebhookRequest = WebhookRequest.extend({
-        class: CanvasDbWebhookClass,
-        type: CanvasDbWebhookType,
+export const CanvasDbWebhookRequestSchema = WebhookRequestSchema.extend({
+        class: CanvasDbWebhookClassSchema,
+        type: CanvasDbWebhookTypeSchema,
 })
         .describe('The schema for webhook requests sent by the CanvasDB');
-export type CanvasDbWebhookRequest = z.infer<typeof CanvasDbWebhookRequest>;
+export type CanvasDbWebhookRequest = z.infer<typeof CanvasDbWebhookRequestSchema>;
 
-export const CanvasDbWebhookProgress = WebhookProgress;
-export type CanvasDbWebhookProgress = z.infer<typeof CanvasDbWebhookProgress>;
+export const CanvasDbWebhookProgressSchema = WebhookProgressSchema;
+export type CanvasDbWebhookProgress = z.infer<typeof CanvasDbWebhookProgressSchema>;
 
-export const CanvasDbWebhookResponse = WebhookResponse;
-export type CanvasDbWebhookResponse = z.infer<typeof CanvasDbWebhookResponse>;
+export const CanvasDbWebhookResponseSchema = WebhookResponseSchema;
+export type CanvasDbWebhookResponse = z.infer<typeof CanvasDbWebhookResponseSchema>;

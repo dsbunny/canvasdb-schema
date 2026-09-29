@@ -1,5 +1,5 @@
 import * as z from "zod";
-export declare const JsonPatchOperation: z.ZodDiscriminatedUnion<[z.ZodObject<{
+export declare const JsonPatchOperationSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     path: z.ZodString;
     op: z.ZodLiteral<"add">;
     value: z.ZodAny;
@@ -24,4 +24,4 @@ export declare const JsonPatchOperation: z.ZodDiscriminatedUnion<[z.ZodObject<{
     value: z.ZodAny;
     not: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>], "op">;
-export type JsonPatchOperation = z.infer<typeof JsonPatchOperation>;
+export type JsonPatchOperation = z.infer<typeof JsonPatchOperationSchema>;
