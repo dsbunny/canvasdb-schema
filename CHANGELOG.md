@@ -1,4 +1,9 @@
 # Changelog
+## v8.0.18
+- Add `@type` fields to all schemas to enable discovery.
+- Nest schema structures to preserve `@type` values.
+- Mark _optional_ schema values for HTTP requests that typically do not include a _body_.
+
 ## v7.1.17
 - Add `id` _ZOD_ metadata for schemas.
 

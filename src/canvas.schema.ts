@@ -2,9 +2,11 @@
 
 import * as z from "zod";
 import { dsbunnyRegistry } from '@dsbunny/zod-registry';
-import { CapabilityTypesSchema } from "@dsbunny/capdb-schema";
+import { CapabilitySchema } from "@dsbunny/capdb-schema";
 
 export const ViewportSchema = z.object({
+	'@type': z.literal('Viewport')
+		.describe('Type of the viewport'),
 	reference_id: z.string()
 		.describe('The reference ID of the viewport'),
 	x: z.number().int()
@@ -22,6 +24,8 @@ export const ViewportSchema = z.object({
 export type Viewport = z.infer<typeof ViewportSchema>;
 
 export const CanvasBaseSchema = z.object({
+	'@type': z.literal('CanvasBase')
+		.describe('Type of the canvas base'),
 	name: z.string()
 		.describe('A descriptive name for the canvas'),
 	tags: z.array(z.string()).min(1).max(100)
@@ -34,7 +38,7 @@ export const CanvasBaseSchema = z.object({
 		.describe('The maximum frames per second of the canvas'),
 	viewports: z.array(ViewportSchema).min(1).max(1000)
 		.describe('The viewports of the canvas'),
-	capabilities: z.array(CapabilityTypesSchema).max(1000)
+	capabilities: z.array(CapabilitySchema.shape.data).max(1000)
 		.describe('The capabilities of the canvas'),
 }).register(dsbunnyRegistry, {
 	id: 'CanvasBaseSchema',
@@ -43,6 +47,8 @@ export const CanvasBaseSchema = z.object({
 export type CanvasBase = z.infer<typeof CanvasBaseSchema>;
 
 export const CanvasRegistrationSchema = z.object({
+	'@type': z.literal('CanvasRegistration')
+		.describe('Type of the canvas registration'),
 	tenant_id: z.string()
 		.describe('The tenant ID of the canvas'),
 	canvas_id: z.uuid()
@@ -56,6 +62,8 @@ export const CanvasRegistrationSchema = z.object({
 export type CanvasRegistration = z.infer<typeof CanvasRegistrationSchema>;
 
 export const CanvasMetadataSchema = CanvasRegistrationSchema.extend({
+	'@type': z.literal('CanvasMetadata')
+		.describe('Type of the canvas metadata'),
 	modify_timestamp: z.iso.datetime()
 		.describe('The ISO datetime of when the canvas was last modified'),
 	is_deleted: z.boolean().default(false)
@@ -66,7 +74,10 @@ export const CanvasMetadataSchema = CanvasRegistrationSchema.extend({
 });
 export type CanvasMetadata = z.infer<typeof CanvasMetadataSchema>;
 
-export const CanvasSchema = CanvasBaseSchema.extend(CanvasMetadataSchema.shape).register(dsbunnyRegistry, {
+export const CanvasSchema = CanvasBaseSchema.extend(CanvasMetadataSchema.shape).extend({
+	'@type': z.literal('Canvas')
+		.describe('Type of the canvas'),
+}).register(dsbunnyRegistry, {
 	id: 'CanvasSchema',
 	description: 'The complete schema of the canvas, including base information and metadata',
 });

@@ -1,8 +1,10 @@
 // vim: tabstop=8 softtabstop=0 noexpandtab shiftwidth=8 nosmarttab
 import * as z from "zod";
 import { dsbunnyRegistry } from '@dsbunny/zod-registry';
-import { CapabilityTypesSchema } from "@dsbunny/capdb-schema";
+import { CapabilitySchema } from "@dsbunny/capdb-schema";
 export const ViewportSchema = z.object({
+    '@type': z.literal('Viewport')
+        .describe('Type of the viewport'),
     reference_id: z.string()
         .describe('The reference ID of the viewport'),
     x: z.number().int()
@@ -18,6 +20,8 @@ export const ViewportSchema = z.object({
     description: 'The viewport',
 });
 export const CanvasBaseSchema = z.object({
+    '@type': z.literal('CanvasBase')
+        .describe('Type of the canvas base'),
     name: z.string()
         .describe('A descriptive name for the canvas'),
     tags: z.array(z.string()).min(1).max(100)
@@ -30,13 +34,15 @@ export const CanvasBaseSchema = z.object({
         .describe('The maximum frames per second of the canvas'),
     viewports: z.array(ViewportSchema).min(1).max(1000)
         .describe('The viewports of the canvas'),
-    capabilities: z.array(CapabilityTypesSchema).max(1000)
+    capabilities: z.array(CapabilitySchema.shape.data).max(1000)
         .describe('The capabilities of the canvas'),
 }).register(dsbunnyRegistry, {
     id: 'CanvasBaseSchema',
     description: 'The base information of the canvas, including name, tags, dimensions, frame rate, viewports, and capabilities',
 });
 export const CanvasRegistrationSchema = z.object({
+    '@type': z.literal('CanvasRegistration')
+        .describe('Type of the canvas registration'),
     tenant_id: z.string()
         .describe('The tenant ID of the canvas'),
     canvas_id: z.uuid()
@@ -48,6 +54,8 @@ export const CanvasRegistrationSchema = z.object({
     description: 'The registration of the canvas',
 });
 export const CanvasMetadataSchema = CanvasRegistrationSchema.extend({
+    '@type': z.literal('CanvasMetadata')
+        .describe('Type of the canvas metadata'),
     modify_timestamp: z.iso.datetime()
         .describe('The ISO datetime of when the canvas was last modified'),
     is_deleted: z.boolean().default(false)
@@ -56,7 +64,10 @@ export const CanvasMetadataSchema = CanvasRegistrationSchema.extend({
     id: 'CanvasMetadataSchema',
     description: 'The metadata of the canvas',
 });
-export const CanvasSchema = CanvasBaseSchema.extend(CanvasMetadataSchema.shape).register(dsbunnyRegistry, {
+export const CanvasSchema = CanvasBaseSchema.extend(CanvasMetadataSchema.shape).extend({
+    '@type': z.literal('Canvas')
+        .describe('Type of the canvas'),
+}).register(dsbunnyRegistry, {
     id: 'CanvasSchema',
     description: 'The complete schema of the canvas, including base information and metadata',
 });

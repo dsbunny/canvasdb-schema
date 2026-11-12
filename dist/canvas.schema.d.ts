@@ -1,5 +1,6 @@
 import * as z from "zod";
 export declare const ViewportSchema: z.ZodObject<{
+    '@type': z.ZodLiteral<"Viewport">;
     reference_id: z.ZodString;
     x: z.ZodNumber;
     y: z.ZodNumber;
@@ -8,12 +9,14 @@ export declare const ViewportSchema: z.ZodObject<{
 }, z.core.$strip>;
 export type Viewport = z.infer<typeof ViewportSchema>;
 export declare const CanvasBaseSchema: z.ZodObject<{
+    '@type': z.ZodLiteral<"CanvasBase">;
     name: z.ZodString;
     tags: z.ZodArray<z.ZodString>;
     width: z.ZodNumber;
     height: z.ZodNumber;
     frame_rate: z.ZodNumber;
     viewports: z.ZodArray<z.ZodObject<{
+        '@type': z.ZodLiteral<"Viewport">;
         reference_id: z.ZodString;
         x: z.ZodNumber;
         y: z.ZodNumber;
@@ -25,6 +28,7 @@ export declare const CanvasBaseSchema: z.ZodObject<{
         is_supported: z.ZodBoolean;
         is_smooth: z.ZodBoolean;
         is_power_efficient: z.ZodBoolean;
+        '@type': z.ZodLiteral<"CapabilityVideo">;
         mime_type: z.ZodLiteral<"video">;
         codec: z.ZodString;
         width: z.ZodNumber;
@@ -35,6 +39,7 @@ export declare const CanvasBaseSchema: z.ZodObject<{
         is_supported: z.ZodBoolean;
         is_smooth: z.ZodBoolean;
         is_power_efficient: z.ZodBoolean;
+        '@type': z.ZodLiteral<"CapabilityAudio">;
         mime_type: z.ZodLiteral<"audio">;
         codec: z.ZodString;
         sample_rate: z.ZodNumber;
@@ -42,6 +47,7 @@ export declare const CanvasBaseSchema: z.ZodObject<{
     }, z.core.$strip>, z.ZodObject<{
         mime_subtype: z.ZodString;
         is_supported: z.ZodBoolean;
+        '@type': z.ZodLiteral<"CapabilityImage">;
         mime_type: z.ZodLiteral<"image">;
         width: z.ZodNumber;
         height: z.ZodNumber;
@@ -51,6 +57,7 @@ export declare const CanvasBaseSchema: z.ZodObject<{
 }, z.core.$strip>;
 export type CanvasBase = z.infer<typeof CanvasBaseSchema>;
 export declare const CanvasRegistrationSchema: z.ZodObject<{
+    '@type': z.ZodLiteral<"CanvasRegistration">;
     tenant_id: z.ZodString;
     canvas_id: z.ZodUUID;
     create_timestamp: z.ZodISODateTime;
@@ -60,6 +67,7 @@ export declare const CanvasMetadataSchema: z.ZodObject<{
     tenant_id: z.ZodString;
     canvas_id: z.ZodUUID;
     create_timestamp: z.ZodISODateTime;
+    '@type': z.ZodLiteral<"CanvasMetadata">;
     modify_timestamp: z.ZodISODateTime;
     is_deleted: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>;
@@ -71,6 +79,7 @@ export declare const CanvasSchema: z.ZodObject<{
     height: z.ZodNumber;
     frame_rate: z.ZodNumber;
     viewports: z.ZodArray<z.ZodObject<{
+        '@type': z.ZodLiteral<"Viewport">;
         reference_id: z.ZodString;
         x: z.ZodNumber;
         y: z.ZodNumber;
@@ -82,6 +91,7 @@ export declare const CanvasSchema: z.ZodObject<{
         is_supported: z.ZodBoolean;
         is_smooth: z.ZodBoolean;
         is_power_efficient: z.ZodBoolean;
+        '@type': z.ZodLiteral<"CapabilityVideo">;
         mime_type: z.ZodLiteral<"video">;
         codec: z.ZodString;
         width: z.ZodNumber;
@@ -92,6 +102,7 @@ export declare const CanvasSchema: z.ZodObject<{
         is_supported: z.ZodBoolean;
         is_smooth: z.ZodBoolean;
         is_power_efficient: z.ZodBoolean;
+        '@type': z.ZodLiteral<"CapabilityAudio">;
         mime_type: z.ZodLiteral<"audio">;
         codec: z.ZodString;
         sample_rate: z.ZodNumber;
@@ -99,6 +110,7 @@ export declare const CanvasSchema: z.ZodObject<{
     }, z.core.$strip>, z.ZodObject<{
         mime_subtype: z.ZodString;
         is_supported: z.ZodBoolean;
+        '@type': z.ZodLiteral<"CapabilityImage">;
         mime_type: z.ZodLiteral<"image">;
         width: z.ZodNumber;
         height: z.ZodNumber;
@@ -110,5 +122,6 @@ export declare const CanvasSchema: z.ZodObject<{
     create_timestamp: z.ZodISODateTime;
     modify_timestamp: z.ZodISODateTime;
     is_deleted: z.ZodDefault<z.ZodBoolean>;
+    '@type': z.ZodLiteral<"Canvas">;
 }, z.core.$strip>;
 export type Canvas = z.infer<typeof CanvasSchema>;

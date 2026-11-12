@@ -11,12 +11,17 @@ import {
 } from "./canvas.schema.js";
 
 // #region Canvases
-export const ListCanvasesRequestSchema = z.object({}).register(dsbunnyRegistry, {
+export const ListCanvasesRequestSchema = z.object({
+	'@type': z.literal('ListCanvasesRequest')
+		.describe('Type of the list canvases request'),
+}).optional().register(dsbunnyRegistry, {
 	id: 'ListCanvasesRequestSchema',
 	description: 'List canvases request schema',
 });
 export type ListCanvasesRequest = z.infer<typeof ListCanvasesRequestSchema>;
 export const ListCanvasesResponseSchema = z.object({
+	'@type': z.literal('ListCanvasesResponse')
+		.describe('Type of the list canvases response'),
 	canvases: z.array(CanvasSchema),
 	next_token: z.string().nullable(),
 }).register(dsbunnyRegistry, {
@@ -25,12 +30,17 @@ export const ListCanvasesResponseSchema = z.object({
 });
 export type ListCanvasesResponse = z.infer<typeof ListCanvasesResponseSchema>;
 
-export const GetCanvasSuggestionsRequestSchema = z.object({}).register(dsbunnyRegistry, {
+export const GetCanvasSuggestionsRequestSchema = z.object({
+	'@type': z.literal('GetCanvasSuggestionsRequest')
+		.describe('Type of the get canvas suggestions request'),
+}).optional().register(dsbunnyRegistry, {
 	id: 'GetCanvasSuggestionsRequestSchema',
 	description: 'Get canvas suggestions request schema',
 });
 export type GetCanvasSuggestionsRequest = z.infer<typeof GetCanvasSuggestionsRequestSchema>;
 export const GetCanvasSuggestionsResponseSchema = z.object({
+	'@type': z.literal('GetCanvasSuggestionsResponse').optional()
+		.describe('Type of the get canvas suggestions response'),
 	c: z.tuple([z.string(), z.string().nullable()])
 		.describe('Canvas name auto-complete for given prefix'),
 	s: z.array(z.tuple([z.string(), z.string().nullable()]))
@@ -41,12 +51,17 @@ export const GetCanvasSuggestionsResponseSchema = z.object({
 });
 export type GetCanvasSuggestionsResponse = z.infer<typeof GetCanvasSuggestionsResponseSchema>;
 
-export const GetCanvasAvailabilityRequestSchema = z.object({}).register(dsbunnyRegistry, {
+export const GetCanvasAvailabilityRequestSchema = z.object({
+	'@type': z.literal('GetCanvasAvailabilityRequest')
+		.describe('Type of the get canvas availability request'),
+}).optional().register(dsbunnyRegistry, {
 	id: 'GetCanvasAvailabilityRequestSchema',
 	description: 'Get canvas availability request schema',
 });
 export type GetCanvasAvailabilityRequest = z.infer<typeof GetCanvasAvailabilityRequestSchema>;
 export const GetCanvasAvailabilityResponseSchema = z.object({
+	'@type': z.literal('GetCanvasAvailabilityResponse')
+		.describe('Type of the get canvas availability response'),
 	is_available: z.boolean()
 		.describe('Indicates if the canvas name is available'),
 }).register(dsbunnyRegistry, {
@@ -55,12 +70,17 @@ export const GetCanvasAvailabilityResponseSchema = z.object({
 });
 export type GetCanvasAvailabilityResponse = z.infer<typeof GetCanvasAvailabilityResponseSchema>;
 
-export const ListDeletedCanvasesRequestSchema = z.object({}).register(dsbunnyRegistry, {
+export const ListDeletedCanvasesRequestSchema = z.object({
+	'@type': z.literal('ListDeletedCanvasesRequest')
+		.describe('Type of the list deleted canvases request'),
+}).optional().register(dsbunnyRegistry, {
 	id: 'ListDeletedCanvasesRequestSchema',
 	description: 'List deleted canvases request schema',
 });
 export type ListDeletedCanvasesRequest = z.infer<typeof ListDeletedCanvasesRequestSchema>;
 export const ListDeletedCanvasesResponseSchema = z.object({
+	'@type': z.literal('ListDeletedCanvasesResponse')
+		.describe('Type of the list deleted canvases response'),
 	canvases: z.array(CanvasSchema),
 	next_token: z.string().nullable(),
 }).register(dsbunnyRegistry, {
@@ -69,56 +89,96 @@ export const ListDeletedCanvasesResponseSchema = z.object({
 });
 export type ListDeletedCanvasesResponse = z.infer<typeof ListDeletedCanvasesResponseSchema>;
 
-export const CreateCanvasRequestSchema = CanvasBaseSchema.register(dsbunnyRegistry, {
+export const CreateCanvasRequestSchema = z.object({
+	'@type': z.literal('CreateCanvasRequest')
+		.describe('Type of the create canvas request'),
+	canvas_data: CanvasBaseSchema
+		.describe('Data of the canvas to be created'),
+}).register(dsbunnyRegistry, {
 	id: 'CreateCanvasRequestSchema',
 	description: 'Create canvas request schema',
 });
 export type CreateCanvasRequest = z.infer<typeof CreateCanvasRequestSchema>;
-export const CreateCanvasResponseSchema = CanvasRegistrationSchema.register(dsbunnyRegistry, {
+export const CreateCanvasResponseSchema = z.object({
+	'@type': z.literal('CreateCanvasResponse')
+		.describe('Type of the create canvas response'),
+	canvas_registration: CanvasRegistrationSchema
+		.describe('Registration data of the created canvas'),
+}).register(dsbunnyRegistry, {
 	id: 'CreateCanvasResponseSchema',
 	description: 'Create canvas response schema',
 });
 export type CreateCanvasResponse = z.infer<typeof CreateCanvasResponseSchema>;
 
-export const GetCanvasRequestSchema = z.object({}).register(dsbunnyRegistry, {
+export const GetCanvasRequestSchema = z.object({
+	'@type': z.literal('GetCanvasRequest')
+		.describe('Type of the get canvas request'),
+}).optional().register(dsbunnyRegistry, {
 	id: 'GetCanvasRequestSchema',
 	description: 'Get canvas request schema',
 });
 export type GetCanvasRequest = z.infer<typeof GetCanvasRequestSchema>;
-export const GetCanvasResponseSchema = CanvasSchema.register(dsbunnyRegistry, {
+export const GetCanvasResponseSchema = z.object({
+	'@type': z.literal('GetCanvasResponse')
+		.describe('Type of the get canvas response'),
+	canvas: CanvasSchema
+		.describe('Data of the retrieved canvas'),
+}).register(dsbunnyRegistry, {
 	id: 'GetCanvasResponseSchema',
 	description: 'Get canvas response schema',
 });
 export type GetCanvasResponse = z.infer<typeof GetCanvasResponseSchema>;
 
-export const DeleteCanvasRequestSchema = z.object({}).register(dsbunnyRegistry, {
+export const DeleteCanvasRequestSchema = z.object({
+	'@type': z.literal('DeleteCanvasRequest')
+		.describe('Type of the delete canvas request'),
+}).optional().register(dsbunnyRegistry, {
 	id: 'DeleteCanvasRequestSchema',
 	description: 'Delete canvas request schema',
 });
 export type DeleteCanvasRequest = z.infer<typeof DeleteCanvasRequestSchema>;
-export const DeleteCanvasResponseSchema = z.object({}).register(dsbunnyRegistry, {
+export const DeleteCanvasResponseSchema = z.object({
+	'@type': z.literal('DeleteCanvasResponse')
+		.describe('Type of the delete canvas response'),
+}).register(dsbunnyRegistry, {
 	id: 'DeleteCanvasResponseSchema',
 	description: 'Delete canvas response schema',
 });
 export type DeleteCanvasResponse = z.infer<typeof DeleteCanvasResponseSchema>;
 
-export const RecoverCanvasRequestSchema = z.object({}).register(dsbunnyRegistry, {
+export const RecoverCanvasRequestSchema = z.object({
+	'@type': z.literal('RecoverCanvasRequest')
+		.describe('Type of the recover canvas request'),
+}).optional().register(dsbunnyRegistry, {
 	id: 'RecoverCanvasRequestSchema',
 	description: 'Recover canvas request schema',
 });
 export type RecoverCanvasRequest = z.infer<typeof RecoverCanvasRequestSchema>;
-export const RecoverCanvasResponseSchema = CanvasSchema.register(dsbunnyRegistry, {
+export const RecoverCanvasResponseSchema = z.object({
+	'@type': z.literal('RecoverCanvasResponse')
+		.describe('Type of the recover canvas response'),
+	canvas: CanvasSchema
+		.describe('Data of the recovered canvas'),
+}).register(dsbunnyRegistry, {
 	id: 'RecoverCanvasResponseSchema',
 	description: 'Recover canvas response schema',
 });
 export type RecoverCanvasResponse = z.infer<typeof RecoverCanvasResponseSchema>;
 
-export const PatchCanvasRequestSchema = z.array(JsonPatchOperationSchema).max(50).register(dsbunnyRegistry, {
+export const PatchCanvasRequestSchema = z.object({
+	'@type': z.literal('PatchCanvasRequest'),
+	patch_operations: z.array(JsonPatchOperationSchema).max(50),
+}).register(dsbunnyRegistry, {
 	id: 'PatchCanvasRequestSchema',
 	description: 'Patch canvas request schema',
 });
 export type PatchCanvasRequest = z.infer<typeof PatchCanvasRequestSchema>;
-export const PatchCanvasResponseSchema = CanvasSchema.register(dsbunnyRegistry, {
+export const PatchCanvasResponseSchema = z.object({
+	'@type': z.literal('PatchCanvasResponse')
+		.describe('Type of the patch canvas response'),
+	canvas: CanvasSchema
+		.describe('Data of the patched canvas'),
+}).register(dsbunnyRegistry, {
 	id: 'PatchCanvasResponseSchema',
 	description: 'Patch canvas response schema',
 });

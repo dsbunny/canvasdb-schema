@@ -29,12 +29,12 @@ jq \
 	--arg webhook_commit "$WEBHOOK_SCHEMA_COMMIT" \
 	--arg registry_commit "$ZOD_REGISTRY_COMMIT" \
 	'
-	.peerDependencies["@dsbunny/capdb-schema"] 	= "github:dsbunny/capdb-schema"				|
+	.peerDependencies["@dsbunny/capdb-schema"]	= "github:dsbunny/capdb-schema"				|
 	.peerDependencies["@dsbunny/error-schema"]	= "github:dsbunny/error-schema"				|
 	.peerDependencies["@dsbunny/patch-schema"]	= "github:dsbunny/patch-schema"				|
 	.peerDependencies["@dsbunny/webhook-schema"]	= "github:dsbunny/webhook-schema"			|
 	.peerDependencies["@dsbunny/zod-registry"]	= "github:dsbunny/zod-registry"				|
-	.devDependencies["@dsbunny/capdb-schema"]  	= ("github:dsbunny/capdb-schema#" + $capdb_commit)	|
+	.devDependencies["@dsbunny/capdb-schema"] 	= ("github:dsbunny/capdb-schema#" + $capdb_commit)	|
 	.devDependencies["@dsbunny/error-schema"]	= ("github:dsbunny/error-schema#" + $error_commit)	|
 	.devDependencies["@dsbunny/patch-schema"]	= ("github:dsbunny/patch-schema#" + $patch_commit)	|
 	.devDependencies["@dsbunny/webhook-schema"]	= ("github:dsbunny/webhook-schema#" + $webhook_commit)	|

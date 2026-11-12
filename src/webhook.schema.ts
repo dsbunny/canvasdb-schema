@@ -21,6 +21,8 @@ export const CanvasDbWebhookTypeSchema = z.enum(['new', 'change', 'delete']).reg
 export type CanvasDbWebhookType = z.infer<typeof CanvasDbWebhookTypeSchema>;
 
 export const CanvasDbWebhookRequestSchema = WebhookRequestSchema.extend({
+        '@type': z.literal('CanvasDbWebhookRequest')
+                .describe('Type of the CanvasDB webhook request'),
         class: CanvasDbWebhookClassSchema,
         type: CanvasDbWebhookTypeSchema,
 }).register(dsbunnyRegistry, {
@@ -29,13 +31,19 @@ export const CanvasDbWebhookRequestSchema = WebhookRequestSchema.extend({
 });
 export type CanvasDbWebhookRequest = z.infer<typeof CanvasDbWebhookRequestSchema>;
 
-export const CanvasDbWebhookProgressSchema = WebhookProgressSchema.register(dsbunnyRegistry, {
+export const CanvasDbWebhookProgressSchema = WebhookProgressSchema.extend({
+        '@type': z.literal('CanvasDbWebhookProgress')
+                .describe('Type of the CanvasDB webhook progress'),
+}).register(dsbunnyRegistry, {
         id: 'CanvasDbWebhookProgressSchema',
         description: 'CanvasDB webhook progress schema',
 });
 export type CanvasDbWebhookProgress = z.infer<typeof CanvasDbWebhookProgressSchema>;
 
-export const CanvasDbWebhookResponseSchema = WebhookResponseSchema.register(dsbunnyRegistry, {
+export const CanvasDbWebhookResponseSchema = WebhookResponseSchema.extend({
+        '@type': z.literal('CanvasDbWebhookResponse')
+                .describe('Type of the CanvasDB webhook response'),
+}).register(dsbunnyRegistry, {
         id: 'CanvasDbWebhookResponseSchema',
         description: "CanvasDB webhook response schema",
 });
