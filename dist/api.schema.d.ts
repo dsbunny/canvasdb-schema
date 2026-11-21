@@ -803,3 +803,4 @@ export declare const CanvasDbResponseSchema: z.ZodUnion<readonly [z.ZodObject<{
     timestamp: z.ZodISODateTime;
 }, z.core.$strip>]>;
 export type CanvasDbResponse = z.infer<typeof CanvasDbResponseSchema>;
+//# sourceMappingURL=api.schema.d.ts.map

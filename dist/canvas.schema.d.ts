@@ -125,3 +125,4 @@ export declare const CanvasSchema: z.ZodObject<{
     '@type': z.ZodLiteral<"Canvas">;
 }, z.core.$strip>;
 export type Canvas = z.infer<typeof CanvasSchema>;
+//# sourceMappingURL=canvas.schema.d.ts.map
