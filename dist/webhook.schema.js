@@ -6,10 +6,15 @@ export const CanvasDbWebhookClassSchema = z.enum(['canvas']).register(dsbunnyReg
     id: 'CanvasDbWebhookClassSchema',
     description: 'The class of the webhook event related to canvas operations',
 });
+export const CanvasDbWebhookTypeSchema = z.enum(['new', 'change']).register(dsbunnyRegistry, {
+    id: 'CanvasDbWebhookTypeSchema',
+    description: 'The type of the webhook event related to canvas operations',
+});
 export const CanvasDbWebhookRequestSchema = WebhookRequestSchema.extend({
     '@type': z.literal('CanvasDbWebhookRequest')
         .describe('Type of the CanvasDB webhook request'),
     class: CanvasDbWebhookClassSchema,
+    type: CanvasDbWebhookTypeSchema,
 }).register(dsbunnyRegistry, {
     id: 'CanvasDbWebhookRequestSchema',
     description: 'The schema for webhook requests sent by the CanvasDB',

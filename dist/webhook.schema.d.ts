@@ -3,6 +3,11 @@ export declare const CanvasDbWebhookClassSchema: z.ZodEnum<{
     canvas: "canvas";
 }>;
 export type CanvasDbWebhookClass = z.infer<typeof CanvasDbWebhookClassSchema>;
+export declare const CanvasDbWebhookTypeSchema: z.ZodEnum<{
+    new: "new";
+    change: "change";
+}>;
+export type CanvasDbWebhookType = z.infer<typeof CanvasDbWebhookTypeSchema>;
 export declare const CanvasDbWebhookRequestSchema: z.ZodObject<{
     tenant_id: z.ZodUUID;
     ref_id: z.ZodUUID;
@@ -10,6 +15,10 @@ export declare const CanvasDbWebhookRequestSchema: z.ZodObject<{
     '@type': z.ZodLiteral<"CanvasDbWebhookRequest">;
     class: z.ZodEnum<{
         canvas: "canvas";
+    }>;
+    type: z.ZodEnum<{
+        new: "new";
+        change: "change";
     }>;
 }, z.core.$strip>;
 export type CanvasDbWebhookRequest = z.infer<typeof CanvasDbWebhookRequestSchema>;
