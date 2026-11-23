@@ -6,6 +6,45 @@ import { ErrorResponseSchema } from "@dsbunny/error-schema";
 import { JsonPatchOperationSchema } from "@dsbunny/patch-schema";
 import { CanvasSchema, CanvasBaseSchema, CanvasRegistrationSchema, } from "./canvas.schema.js";
 // #region Canvases
+const commaSeparatedStrings = z.codec(z.union([z.string(), z.array(z.string())]), z.array(z.string()), {
+    decode: value => (Array.isArray(value) ? value : [value])
+        .flatMap(item => item.split(',').map(part => part.trim()).filter(Boolean)),
+    encode: value => value,
+});
+export const ListCanvasesQuerySchema = z.object({
+    canvas_type: z.string().optional(),
+    viewport_range: z.string().optional(),
+    sort_by: z.string().optional(),
+    sort_dir: z.string().optional(),
+    max_results: z.string().optional(),
+    next_token: z.string().optional(),
+    q: z.string().optional(),
+    id: commaSeparatedStrings.optional(),
+    tags: commaSeparatedStrings.optional(),
+}).register(dsbunnyRegistry, {
+    id: 'ListCanvasesQuerySchema',
+    description: 'List canvases query schema',
+});
+export const GetCanvasSuggestionsQuerySchema = z.object({
+    q: z.string().optional(),
+    c: z.string().optional(),
+    t: z.string().optional(),
+}).register(dsbunnyRegistry, {
+    id: 'GetCanvasSuggestionsQuerySchema',
+    description: 'Get canvas suggestions query schema',
+});
+export const GetCanvasAvailabilityQuerySchema = z.object({
+    name: z.string(),
+}).register(dsbunnyRegistry, {
+    id: 'GetCanvasAvailabilityQuerySchema',
+    description: 'Get canvas availability query schema',
+});
+export const CanvasIdParamsSchema = z.object({
+    canvasId: z.string(),
+}).register(dsbunnyRegistry, {
+    id: 'CanvasIdParamsSchema',
+    description: 'Canvas ID path parameter schema',
+});
 export const ListCanvasesRequestSchema = z.object({
     '@type': z.literal('ListCanvasesRequest')
         .describe('Type of the list canvases request'),
@@ -72,15 +111,17 @@ export const ListDeletedCanvasesResponseSchema = z.object({
     id: 'ListDeletedCanvasesResponseSchema',
     description: 'List deleted canvases response schema',
 });
-export const CreateCanvasRequestSchema = z.object({
+export const CreateCanvasBodySchema = z.object({
     '@type': z.literal('CreateCanvasRequest')
         .describe('Type of the create canvas request'),
     canvas_data: CanvasBaseSchema
         .describe('Data of the canvas to be created'),
 }).register(dsbunnyRegistry, {
     id: 'CreateCanvasRequestSchema',
-    description: 'Create canvas request schema',
+    description: 'Create canvas request body schema',
 });
+/** @deprecated Use CreateCanvasBodySchema. */
+export const CreateCanvasRequestSchema = CreateCanvasBodySchema;
 export const CreateCanvasResponseSchema = z.object({
     '@type': z.literal('CreateCanvasResponse')
         .describe('Type of the create canvas response'),
@@ -136,13 +177,15 @@ export const RecoverCanvasResponseSchema = z.object({
     id: 'RecoverCanvasResponseSchema',
     description: 'Recover canvas response schema',
 });
-export const PatchCanvasRequestSchema = z.object({
+export const PatchCanvasBodySchema = z.object({
     '@type': z.literal('PatchCanvasRequest'),
     patch_operations: z.array(JsonPatchOperationSchema).max(50),
 }).register(dsbunnyRegistry, {
     id: 'PatchCanvasRequestSchema',
-    description: 'Patch canvas request schema',
+    description: 'Patch canvas request body schema',
 });
+/** @deprecated Use PatchCanvasBodySchema. */
+export const PatchCanvasRequestSchema = PatchCanvasBodySchema;
 export const PatchCanvasResponseSchema = z.object({
     '@type': z.literal('PatchCanvasResponse')
         .describe('Type of the patch canvas response'),
@@ -159,11 +202,11 @@ export const CanvasDbRequestSchema = z.union([
     GetCanvasSuggestionsRequestSchema,
     GetCanvasAvailabilityRequestSchema,
     ListDeletedCanvasesRequestSchema,
-    CreateCanvasRequestSchema,
+    CreateCanvasBodySchema,
     GetCanvasRequestSchema,
     DeleteCanvasRequestSchema,
     RecoverCanvasRequestSchema,
-    PatchCanvasRequestSchema,
+    PatchCanvasBodySchema,
 ]).register(dsbunnyRegistry, {
     id: 'CanvasDbRequestSchema',
     description: 'CanvasDB request schema',
