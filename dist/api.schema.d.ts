@@ -1,4 +1,9 @@
 import * as z from "zod";
+export declare const CanvasDbPingResponseSchema: z.ZodObject<{
+    ping: z.ZodLiteral<"pong">;
+    timestamp: z.ZodISODateTime;
+}, z.core.$strip>;
+export type CanvasDbPingResponse = z.infer<typeof CanvasDbPingResponseSchema>;
 export declare const ListCanvasesQuerySchema: z.ZodObject<{
     canvas_type: z.ZodOptional<z.ZodString>;
     viewport_range: z.ZodOptional<z.ZodString>;

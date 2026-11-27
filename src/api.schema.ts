@@ -11,6 +11,15 @@ import {
 	CanvasRegistrationSchema,
 } from "./canvas.schema.js";
 
+export const CanvasDbPingResponseSchema = z.object({
+	ping: z.literal('pong'),
+	timestamp: z.iso.datetime(),
+}).register(dsbunnyRegistry, {
+	id: 'CanvasDbPingResponseSchema',
+	description: 'CanvasDB ping response schema',
+});
+export type CanvasDbPingResponse = z.infer<typeof CanvasDbPingResponseSchema>;
+
 // #region Canvases
 const commaSeparatedStrings = z.codec(
 	z.union([z.string(), z.array(z.string())]),

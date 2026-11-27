@@ -5,6 +5,13 @@ import { dsbunnyRegistry } from '@dsbunny/zod-registry';
 import { ErrorResponseSchema } from "@dsbunny/error-schema";
 import { JsonPatchOperationSchema } from "@dsbunny/patch-schema";
 import { CanvasSchema, CanvasBaseSchema, CanvasRegistrationSchema, } from "./canvas.schema.js";
+export const CanvasDbPingResponseSchema = z.object({
+    ping: z.literal('pong'),
+    timestamp: z.iso.datetime(),
+}).register(dsbunnyRegistry, {
+    id: 'CanvasDbPingResponseSchema',
+    description: 'CanvasDB ping response schema',
+});
 // #region Canvases
 const commaSeparatedStrings = z.codec(z.union([z.string(), z.array(z.string())]), z.array(z.string()), {
     decode: value => (Array.isArray(value) ? value : [value])

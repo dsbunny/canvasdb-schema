@@ -21,7 +21,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"devDependencies": {
-		"@dsbunny/capdb-schema": "github:dsbunny/capdb-schema#1b76768",
+		"@dsbunny/capdb-schema": "github:dsbunny/capdb-schema#5a2bf3a",
 		"@dsbunny/error-schema": "github:dsbunny/error-schema#9f22488",
 		"@dsbunny/patch-schema": "github:dsbunny/patch-schema#4719667",
 		"@dsbunny/webhook-schema": "github:dsbunny/webhook-schema#545a076",
